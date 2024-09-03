@@ -27,7 +27,7 @@ setInterval(function regen() {
         return true;
     } else {
         if (fungalHealth < 50) {
-            if (energy > 0); {
+            if (energy > 12) {
                 fungalHealth += 1;
                 renderScreen();
             };
@@ -49,7 +49,7 @@ function renderScreen(){
     if (fungalHealth === 0) {
         fungusElement.classList.remove("walk");
         fungusElement.classList.add("dead");
-    } else if (energy === 0) {
+    } else if (energy < 12) {
         fungusElement.classList.remove("walk");
         fungusElement.classList.add("jump");
     }
@@ -60,12 +60,41 @@ function renderScreen(){
 }
 
 function buttonClickArcane(event) {
-    if (energy < 18) {
+    if (energy < 12) {
         event.target.classList.add("disabled")
     } else {
         fungalHealth -= 14;
-        energy -= 18;
+        energy -= 12;
     }
     renderScreen();
 }
 
+function buttonClickEntangle(event) {
+    if (energy < 23) {
+        event.target.classList.add("disabled")
+    } else {
+        fungalHealth -= 9;
+        energy -= 23;
+    }
+    renderScreen();
+}
+
+function buttonClickBlade(event) {
+    if (energy < 38) {
+        event.target.classList.add("disabled")
+    } else {
+        fungalHealth -= 47;
+        energy -= 38;
+    }
+    renderScreen();
+}
+
+function buttonClickFire(event) {
+    if (energy < 33) {
+        event.target.classList.add("disabled")
+    } else {
+        fungalHealth -= 25;
+        energy -= 33;
+    }
+    renderScreen();
+}
