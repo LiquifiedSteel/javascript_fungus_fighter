@@ -22,7 +22,18 @@ function onReady() {
 
 onReady()
 
-
+setInterval(function regen() {
+    if (fungalHealth === 0) {
+        return true;
+    } else {
+        if (fungalHealth < 50) {
+            if (energy > 0); {
+                fungalHealth += 1;
+                renderScreen();
+            };
+        };
+    };
+}, 1000);
 
 function renderScreen(){
     const healthElement = document.getElementById("health");
