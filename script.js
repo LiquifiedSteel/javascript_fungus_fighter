@@ -4,10 +4,11 @@
 // let fungusHP = 100;
 let fungalHealth = 100;
 let energy = 100;
-
+let ablaze = false;
+let countdown = 0;
 
 function onReady() {
-    console.log("Ready to go!")
+    console.log("Ready to go!");
     
     // Make sure you check the index.html file! 
     // There are lots of buttons and things ready for you to hook into here!
@@ -23,17 +24,37 @@ function onReady() {
 onReady()
 
 setInterval(function regen() {
+    if (!ablaze) {
+        if (fungalHealth === 0) {
+            return true;
+        } else {
+            if (fungalHealth < 50) {
+                if (energy > 12) {
+                    fungalHealth += 1;
+                };
+            };
+        };
+    }
+    renderScreen();
+}, 1000);
+
+
+setInterval(function burn() {
     if (fungalHealth === 0) {
         return true;
     } else {
-        if (fungalHealth < 50) {
-            if (energy > 12) {
-                fungalHealth += 1;
+        if (ablaze) {
+            if (countdown > 0) {
+                fungalHealth -= 1;
                 renderScreen();
-            };
+                countdown -= 1;
+            } else {
+                ablaze = false;
+            }
         };
     };
-}, 1000);
+}, 2000);
+
 
 function renderScreen(){
     const healthElement = document.getElementById("health");
@@ -50,8 +71,10 @@ function renderScreen(){
         fungusElement.classList.remove("walk");
         fungusElement.classList.add("dead");
     } else if (energy < 12) {
-        fungusElement.classList.remove("walk");
-        fungusElement.classList.add("jump");
+        if (!ablaze) {
+            fungusElement.classList.remove("walk");
+            fungusElement.classList.add("jump");
+        }
     }
     healthElement.innerText = fungalHealth;
     document.getElementById("hp-meter").value = fungalHealth;
@@ -85,6 +108,8 @@ function buttonClickBlade(event) {
     } else {
         fungalHealth -= 47;
         energy -= 38;
+        ablaze = true;
+        countdown += 5;
     }
     renderScreen();
 }
@@ -95,6 +120,8 @@ function buttonClickFire(event) {
     } else {
         fungalHealth -= 25;
         energy -= 33;
+        ablaze = true;
+        countdown += 15;
     }
     renderScreen();
 }
